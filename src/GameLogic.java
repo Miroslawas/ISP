@@ -2,7 +2,7 @@ import Utilities.DecisionTreeManager;
 import Utilities.GameBoardManager;
 import Entities.DecisionTree;
 
-
+//Will be removed later
 public class GameLogic implements IGameLogic {
     private int x = 0;
     private int y = 0;
