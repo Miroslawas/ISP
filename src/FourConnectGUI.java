@@ -18,7 +18,7 @@ public class FourConnectGUI extends JComponent implements MouseListener
     private IGameLogic player2;
     private IGameLogic.Winner winner;
     private int playerTurn;
-    private int[][] gameBoard;
+    public int[][] gameBoard;
 
     // Images for drawing the game board
     private Image 		part, redPion, bluePion, arrow, arrow_active, background;

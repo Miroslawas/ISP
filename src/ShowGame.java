@@ -31,8 +31,8 @@ public class ShowGame
     {
         IGameLogic player1 = null;
         IGameLogic player2 = null;
-        int cols = 7;
-        int rows = 6;
+        int cols = 2;
+        int rows = 2;
         
         boolean err = args.length < 2;
         String errMsg = "";
