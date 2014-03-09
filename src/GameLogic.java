@@ -2,7 +2,6 @@ import Utilities.DecisionTreeManager;
 import Utilities.GameBoardManager;
 import Entities.DecisionTree;
 
-//Will be removed later
 public class GameLogic implements IGameLogic {
     private int x = 0;
     private int y = 0;
@@ -20,23 +19,33 @@ public class GameLogic implements IGameLogic {
     public void initializeGame(int x, int y, int playerID) {
         this.x = x;
         this.y = y;
-        this.gameBoard = new int[x][y];
-        this.playerID = playerID;
+        this.gameBoard = MathUtils.Helpers.rotateMatrix(new int[x][y]);
+        this.playerID = setPlayerID(playerID);
     }
 	
-    public Winner gameFinished() {
+    private int setPlayerID(int playerIDValue) {
+		// TODO Auto-generated method stub
+    	if (playerIDValue == 0)
+    	{
+    		return 1;
+    	}
+		return 2;
+	}
+
+	public Winner gameFinished() {
         return Winner.NOT_FINISHED;
     }
 
-
     public void insertCoin(int column, int playerID) {
-    	gameBoard = gameBoardManager.makeMove(gameBoard, column, playerID);
+    	gameBoard = gameBoardManager
+    			.makeMove(gameBoard, column, playerID)
+    			.getGameBoardValue();
     }
 
     public int decideNextMove() {
-    	DecisionTree dTree = dTManager.GenerateDecisionTree(0, gameBoard, playerID);
-    	
-        return 0;
+    	DecisionTree dTree = new DecisionTree();
+    	int[][] tempGameBoard = gameBoard;
+    	dTree.rootNode = dTManager.createDecisionSubtree(10, tempGameBoard, dTManager.alteratePlayer(playerID), true);
+    	return dTree.rootNode.getSelectedColumn();
     }
-
 }

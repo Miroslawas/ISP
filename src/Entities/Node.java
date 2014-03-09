@@ -1,16 +1,27 @@
 package Entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Node {
 	
 	private boolean isMaxNode;
 	private int[][] gameBoard;
+	private List<Node> childrenNodes;
 	private int selectedColumn;
 	private float utility;
 	
-	public Node(int[][] gameBoardValue, boolean isMaxNodeValue)
+	public Node()
+	{
+		childrenNodes = new ArrayList<Node>();
+	}
+	
+	public Node(int[][] gameBoardValue, boolean isMaxNodeValue, int utilityValue, int selectedColumnValue)
 	{
 		isMaxNode = isMaxNodeValue;
 		gameBoard = gameBoardValue;
+		utility = utilityValue;
+		selectedColumn = selectedColumnValue;
 	}
 	
 	public void setUtility(float utilityValue)
@@ -49,5 +60,18 @@ public class Node {
 
 	public void setSelectedColumn(int selectedColumn) {
 		this.selectedColumn = selectedColumn;
+	}
+
+	public void addChildrenNode(Node childrenNode)
+	{
+		this.childrenNodes.add(childrenNode);
+	}
+	
+	public List<Node> getChildrenNodes() {
+		return childrenNodes;
+	}
+
+	public void setChildrenNodes(List<Node> childrenNodes) {
+		this.childrenNodes = childrenNodes;
 	}
 }
