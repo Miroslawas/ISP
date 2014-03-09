@@ -2,26 +2,30 @@ package Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.sun.tools.javac.util.Pair;
 
+import Entities.BoxedGameBoard;
+import Entities.GameBoard;
 import Entities.TokenCluster;
 
 public class GameBoardManager {
 	
+	private Map<String, GameBoard> gameBoards;
 	
 	/**
 	 * @param gameBoard
 	 * @param player
 	 * @return Returns column indexes for possible moves
 	 */
-	public List<Integer> getPossibleMoves(int[][] gameBoard, int player)
+	public List<Integer> getPossibleMoveColumnIndexes(int[][] gameBoard, int player)
 	{
 		List<Integer> columns = new ArrayList<Integer>();
 		int rowCount = gameBoard[0].length;
-		for (int i = 0; i < gameBoard.length; i ++)
+		for (int i = 0; i < gameBoard[0].length; i ++)
 		{
-			if (gameBoard[i][rowCount] == 0)
+			if (gameBoard[i][0] == 0)
 			{
 				columns.add(i);
 			}
@@ -59,8 +63,9 @@ public class GameBoardManager {
 	 */
 	public List<TokenCluster> GetClusters(int[][] gameBoard, int player)
 	{
-		List<Pair<Integer, Integer>> visitedCells = new ArrayList<Pair<Integer, Integer>>();
+ 		List<Pair<Integer, Integer>> visitedCells = new ArrayList<Pair<Integer, Integer>>();
 		List<TokenCluster> tokenClusters = new ArrayList<TokenCluster>();
+		GameBoard gameBoardWrapper = new GameBoard(gameBoard);
 		
 		for(int i = 0; i < gameBoard.length; i++)
 		{
@@ -74,24 +79,40 @@ public class GameBoardManager {
 	}
 
 
-	public int[][] makeMove(int[][] gameBoard, int columnIndex, int player) 
+	public BoxedGameBoard makeMove(int[][] gameBoard, int columnIndex, int player) 
 	{
-		int firstEmptyRow = getEmptyRowIndex(gameBoard[columnIndex]);
-		gameBoard[columnIndex][firstEmptyRow] = player;
-		return gameBoard;
+		int firstEmptyRow = getEmptyRowIndex(MathUtils.Helpers.getMatrixColumn(gameBoard, columnIndex));
+		boolean validRow = firstEmptyRow != -1;
+		if (validRow){
+			gameBoard[MathUtils.Helpers.getColumnCount(gameBoard) - firstEmptyRow - 1][columnIndex] = player;
+		}
+		return new BoxedGameBoard(firstEmptyRow != -1, gameBoard);
 	}
 
 
 	private int getEmptyRowIndex(int[] column) {
 		
-		for (int i = column.length; i > 0; i--)
+		for (int i = 0; i < column.length; i++)
 		{
-			if (column[i-1] == 0)
+			if (column[i] == 0)
 			{
-				return column.length - i;
+				return i;
 			}
 		}
 		
-		return 0;
+		return -1;
+	}
+
+
+	public Map<String, GameBoard> getGameBoards() {
+		return gameBoards;
+	}
+
+	public void setGameBoards(Map<String, GameBoard> gameBoards) {
+		this.gameBoards = gameBoards;
+	}
+	
+	public void addGameBoardToMap(GameBoard gameBoard)
+	{
 	}
 }
