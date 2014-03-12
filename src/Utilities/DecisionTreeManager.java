@@ -66,10 +66,10 @@ public class DecisionTreeManager {
 	private float getUtility(int[][] gameBoard, int player)
 	{
 		String boardString = gameBoardManager.boardToString(gameBoard);
-		if (utilitiesCache.containsKey(boardString))
-		{
-			return utilitiesCache.get(boardString);
-		}
+		//if (utilitiesCache.containsKey(boardString))
+		//{
+		//	return utilitiesCache.get(boardString);
+		//}
 		
 		List<TokenCluster> clusters = gameBoardManager.GetClusters(gameBoard, player);
 		

@@ -7,6 +7,7 @@ import java.util.Map;
 import com.sun.tools.javac.util.Pair;
 
 import Entities.BoxedGameBoard;
+import Entities.Cell;
 import Entities.GameBoard;
 import Entities.TokenCluster;
 
@@ -67,11 +68,30 @@ public class GameBoardManager {
 		List<TokenCluster> tokenClusters = new ArrayList<TokenCluster>();
 		GameBoard gameBoardWrapper = new GameBoard(gameBoard);
 		
-		for(int i = 0; i < gameBoard.length; i++)
+		TokenCluster currentTokenCluster = new TokenCluster(player);
+		currentTokenCluster.setPlayer(player);
+		
+		for(int i = 0; i < gameBoard[0].length - 1; i++)
 		{
-			for (int j = 0; j < gameBoard.length; j ++)
+			for (int j = gameBoard.length - 1; j > 0; j--)
 			{
+				//Current column is empty
+				if (gameBoard[j][i] == 0)
+				{
+					if (currentTokenCluster.hasCells())
+					{
+						tokenClusters.add(currentTokenCluster);
+						currentTokenCluster = new TokenCluster();
+					}
+					continue;
+				}
 				
+				if (gameBoard[j][i] == player)
+				{
+					currentTokenCluster.addCell(new Cell(i, gameBoard[0].length - 1, player));
+					
+					
+				}
 			}
 		}
 		

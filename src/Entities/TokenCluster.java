@@ -17,6 +17,20 @@ public class TokenCluster {
 		clusterBounds = new ArrayList<Pair<Integer, Integer>>();
 	}
 	
+	public TokenCluster(int playerValue) {
+		this();
+		player = playerValue;
+	}
+
+	public boolean hasCells()
+	{
+		return !this.cells.isEmpty();
+	}
+	
+	public void addCell(Cell cell){
+		cells.add(cell);
+	}
+	
 	public int getTokenCount() {
 		return tokenCount;
 	}

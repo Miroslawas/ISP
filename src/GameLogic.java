@@ -43,6 +43,7 @@ public class GameLogic implements IGameLogic {
     }
 
     public int decideNextMove() {
+    	
     	DecisionTree dTree = new DecisionTree();
     	int[][] tempGameBoard = gameBoard;
     	dTree.rootNode = dTManager.createDecisionSubtree(10, tempGameBoard, dTManager.alteratePlayer(playerID), true);
